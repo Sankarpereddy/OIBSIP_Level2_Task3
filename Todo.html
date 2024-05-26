@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager</title>
+    <style>
+        body {
+            font-family: 'Verdana', sans-serif;
+            background-image: url('https://images.pexels.com/photos/3184328/pexels-photo-3184328.jpeg');
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #fff;
+        }
+        .container {
+            background: rgba(0, 0, 0, 0.75);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            width: 400px;
+        }
+        .container h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .input-group {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        .input-group input {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 5px 0 0 5px;
+            font-size: 16px;
+        }
+        .input-group button {
+            padding: 12px;
+            border: none;
+            border-radius: 0 5px 5px 0;
+            background: #f39c12;
+            color: #fff;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            padding: 12px;
+            margin-bottom: 10px;
+            background: #333;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        li.completed {
+            text-decoration: line-through;
+            background: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Task Manager</h1>
+        <div class="input-group">
+            <input type="text" id="taskInput" placeholder="New task">
+            <button onclick="addTask()">Add</button>
+        </div>
+        <ul id="taskList"></ul>
+        <h2>Completed</h2>
+        <ul id="completedTasks"></ul>
+    </div>
+
+    <script>
+        function addTask() {
+            const taskInput = document.getElementById('taskInput').value;
+            if (taskInput.trim()) {
+                const taskList = document.getElementById('taskList');
+                const taskItem = document.createElement('li');
+                taskItem.textContent = taskInput;
+                taskItem.addEventListener('click', function() {
+                    this.classList.toggle('completed');
+                    updateCompletedTasks();
+                });
+                taskList.appendChild(taskItem);
+                document.getElementById('taskInput').value = '';
+            }
+        }
+
+        function updateCompletedTasks() {
+            const completedTasks = document.getElementById('completedTasks');
+            completedTasks.innerHTML = '';
+            document.querySelectorAll('#taskList li.completed').forEach(item => {
+                const completedItem = document.createElement('li');
+                completedItem.textContent = item.textContent;
+                completedItem.classList.add('completed');
+                completedTasks.appendChild(completedItem);
+            });
+        }
+    </script>
+</body>
+</html>
